@@ -1,0 +1,2 @@
+config SHIELD_BB_TRACKBALL
+	def_bool $(shields_list_contains,bb_trackball)
