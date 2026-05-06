@@ -23,24 +23,26 @@ struct bb_trackball_data {
     struct gpio_callback right_cb;
 };
 
+#define MOVE_STEP 5
+
 static void up_handler(const struct device *port, struct gpio_callback *cb, gpio_port_pins_t pins) {
     struct bb_trackball_data *data = CONTAINER_OF(cb, struct bb_trackball_data, up_cb);
-    input_report_rel(data->dev, INPUT_REL_Y, -1, true, K_NO_WAIT);
+    input_report_rel(data->dev, INPUT_REL_Y, -MOVE_STEP, true, K_NO_WAIT);
 }
 
 static void down_handler(const struct device *port, struct gpio_callback *cb, gpio_port_pins_t pins) {
     struct bb_trackball_data *data = CONTAINER_OF(cb, struct bb_trackball_data, down_cb);
-    input_report_rel(data->dev, INPUT_REL_Y, 1, true, K_NO_WAIT);
+    input_report_rel(data->dev, INPUT_REL_Y, MOVE_STEP, true, K_NO_WAIT);
 }
 
 static void left_handler(const struct device *port, struct gpio_callback *cb, gpio_port_pins_t pins) {
     struct bb_trackball_data *data = CONTAINER_OF(cb, struct bb_trackball_data, left_cb);
-    input_report_rel(data->dev, INPUT_REL_X, -1, true, K_NO_WAIT);
+    input_report_rel(data->dev, INPUT_REL_X, -MOVE_STEP, true, K_NO_WAIT);
 }
 
 static void right_handler(const struct device *port, struct gpio_callback *cb, gpio_port_pins_t pins) {
     struct bb_trackball_data *data = CONTAINER_OF(cb, struct bb_trackball_data, right_cb);
-    input_report_rel(data->dev, INPUT_REL_X, 1, true, K_NO_WAIT);
+    input_report_rel(data->dev, INPUT_REL_X, MOVE_STEP, true, K_NO_WAIT);
 }
 
 static int setup_pin(const struct gpio_dt_spec *pin, struct gpio_callback *cb,
@@ -55,7 +57,7 @@ static int setup_pin(const struct gpio_dt_spec *pin, struct gpio_callback *cb,
     ret = gpio_pin_configure_dt(pin, GPIO_INPUT | GPIO_PULL_UP);
     if (ret < 0) return ret;
 
-    ret = gpio_pin_interrupt_configure_dt(pin, GPIO_INT_EDGE_FALLING);
+    ret = gpio_pin_interrupt_configure_dt(pin, GPIO_INT_EDGE_BOTH);
     if (ret < 0) return ret;
 
     gpio_init_callback(cb, handler, BIT(pin->pin));
