@@ -23,7 +23,7 @@ struct bb_trackball_data {
     struct gpio_callback right_cb;
 };
 
-#define MOVE_STEP 5
+#define MOVE_STEP 50
 
 static void up_handler(const struct device *port, struct gpio_callback *cb, gpio_port_pins_t pins) {
     struct bb_trackball_data *data = CONTAINER_OF(cb, struct bb_trackball_data, up_cb);
