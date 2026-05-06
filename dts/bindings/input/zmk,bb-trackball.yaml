@@ -1,0 +1,19 @@
+description: Blackberry optical trackball (GPIO edge-triggered)
+
+compatible: "zmk,bb-trackball"
+
+include: base.yaml
+
+properties:
+  up-gpios:
+    type: phandle-array
+    required: true
+  down-gpios:
+    type: phandle-array
+    required: true
+  left-gpios:
+    type: phandle-array
+    required: true
+  right-gpios:
+    type: phandle-array
+    required: true

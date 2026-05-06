@@ -1,0 +1,1 @@
+add_subdirectory_ifdef(CONFIG_BB_TRACKBALL drivers/input)
