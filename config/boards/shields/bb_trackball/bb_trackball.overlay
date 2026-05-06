@@ -1,6 +1,7 @@
 / {
     chosen {
         zmk,kscan = &kscan0;
+        zephyr,console = &cdc_acm_uart0;
     };
 
     /* Single key kscan just for the click button */
@@ -21,5 +22,11 @@
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&bb_trackball>;
+    };
+};
+
+&usbd {
+    cdc_acm_uart0: cdc_acm_uart0 {
+        compatible = "zephyr,cdc-acm-uart";
     };
 };
